@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "Canvas Wrapped",
+  "version": "0.0.1",
+  "description": "null",
+  "permissions": [
+    "cookies"
+  ],
+  "host_permissions": [
+    "https://iowacityschools.instructure.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://iowacityschools.instructure.com/*"
+      ],
+      "js": [
+        "contentScript.js"
+      ]
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "assets/L-Pass.png",
+      "24": "assets/L-Pass.png",
+      "32": "assets/L-Pass.png"
+    },
+    "default_title": "Fast Pass",
+    "default_popup": "popup.html"
+  }
+}
