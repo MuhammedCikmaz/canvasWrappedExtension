@@ -1,1 +1,1 @@
-# L-Pass
+# Canvas Wrapped Google Chrome Extension

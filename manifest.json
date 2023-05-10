@@ -2,12 +2,14 @@
   "manifest_version": 3,
   "name": "Canvas Wrapped",
   "version": "0.0.1",
-  "description": "null",
+  "description": "Canvas Wrapped is here! Inspired by Spotify Wrapped.",
   "permissions": [
-    "cookies"
+    "cookies",
+    "tabs"
   ],
   "host_permissions": [
-    "https://iowacityschools.instructure.com/*"
+    "https://*/*",
+    "http://*/*"
   ],
   "background": {
     "service_worker": "background.js"
@@ -15,7 +17,8 @@
   "content_scripts": [
     {
       "matches": [
-        "https://iowacityschools.instructure.com/*"
+        "https://*/*",
+        "https://*/*"
       ],
       "js": [
         "contentScript.js"
@@ -24,11 +27,11 @@
   ],
   "action": {
     "default_icon": {
-      "16": "assets/L-Pass.png",
-      "24": "assets/L-Pass.png",
-      "32": "assets/L-Pass.png"
+      "16": "assets/CanvasWrapped-favicon.png",
+      "24": "assets/CanvasWrapped-favicon.png",
+      "32": "assets/CanvasWrapped-favicon.png"
     },
-    "default_title": "Fast Pass",
+    "default_title": "Canvas Wrapped",
     "default_popup": "popup.html"
   }
 }

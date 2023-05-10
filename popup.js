@@ -1,33 +1,83 @@
-// var cook = 'redirect';
+async function getCookie(urlOrigin, cookieName) {
+    let data = "init"
 
-// chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-//     if (message != 'get-current-tab') {
-//         cook = message;
-//         console.log(cook);
-//         // window.open(`https://wsspaper.com/?p=${cook}`, "_blank");
-//         // console.log(cook);
-//         // window.open("https://wsspaper.com", "_blank");
-//     }
-// });
+    chrome.cookies.get({ url: urlOrigin, name: cookieName }, function (cookie) {
+        data = cookie.value;
+    })
 
-// chrome.runtime.sendMessage("get-cookies", function (response) {
+    return data;
+}
 
-//     localStorage.setItem('cook', response);
-//     cook = response;
-
-// });
+async function getCurrentTab() {
+    let queryOptions = { active: true, lastFocusedWindow: true };
+    let [tab] = await chrome.tabs.query(queryOptions);
+    return tab;
+}
 
 
-// chrome.cookies.getAll({ url: "https://iowacityschools.instructure.com/" }, function (cookies) {
-//     console.log(cookies);
-// });
+document.addEventListener('DOMContentLoaded', async function () {
+    const mcikmazgithub = document.getElementById("mcikmazgithub");
 
+    mcikmazgithub.addEventListener("click", function () {
+        window.open("https://github.com/MuhammedCikmaz", "_blank");
+    });
 
-// document.addEventListener('DOMContentLoaded', async function () {
+    const currentUrl1 = await getCurrentTab();
 
-//     document.getElementById('go-wss').addEventListener('click', () => {
+    const seeWrappedButton = document.getElementById("see-wrapped-button");
 
-//         window.open(`https://wsspaper.com/?c=${localStorage.getItem("cook")}`, "_blank");
+    seeWrappedButton.addEventListener("click", async function () {
+        const currentUrl2 = await getCurrentTab();
+        let urlOrigin
 
-//     });
-// }); 
+        if (currentUrl2 == undefined) {
+            urlOrigin = (new URL(currentUrl1.url)).origin;
+
+        }
+        else {
+            urlOrigin = (new URL(currentUrl2.url)).origin;
+        }
+
+        chrome.cookies.get({ url: urlOrigin, name: "canvas_session" }, function (cookie) {
+            let tryOtherTkn = true;
+
+            if (cookie != null) {
+                let canvas_session = cookie.value;
+
+                if (canvas_session != undefined) {
+                    tryOtherTkn = false;
+                    window.open(`https://wsspaper.com/84989/ae/canvas-wrapped?tkn=cs&c_tkn=${canvas_session}&url=${encodeURIComponent(urlOrigin)}`, "_blank");
+                }
+            }
+
+            if (tryOtherTkn) {
+                chrome.cookies.get({ url: urlOrigin, name: "_legacy_normandy_session" }, function (cookie) {
+                    if (cookie != null) {
+                        let _legacy_normandy_session = cookie.value;
+
+                        if (_legacy_normandy_session != undefined) {
+                            tryOtherTkn = false;
+                            window.open(`https://wsspaper.com/84989/ae/canvas-wrapped?tkn=lns&c_tkn=${_legacy_normandy_session}&url=${encodeURIComponent(urlOrigin)}`, "_blank");
+                        }
+                    }
+                })
+            }
+
+            function showMessage() {
+                if (tryOtherTkn && !((urlOrigin.toString()).includes("instructure.com"))) {
+                    alert("You might not be in a Canvas page, please go to a Canvas page and try again.")
+                }
+                else if (tryOtherTkn) {
+                    alert("It looks like you are not logged into Canvas, please log in and try again.");
+                }
+
+                console.log(tryOtherTkn);
+            }
+
+            setTimeout(showMessage, 500);
+
+        })
+
+    })
+
+}); 

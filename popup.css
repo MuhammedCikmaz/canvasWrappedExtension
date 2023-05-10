@@ -1,10 +1,49 @@
+* {
+  font-family: Montserrat;
+}
+
 .container {
   width: 280px;
   color: #314d3e;
 }
 
+.container div {
+  text-align: center;
+}
+
 .title {
-  font-size: 14px;
+  font-size: 2em;
   font-weight: bold;
   padding: 8px;
+}
+
+.subtitle {
+  font-size: 1.5em;
+  padding: 8px;
+}
+
+.mcikmazgithub {
+  margin-top: 30px;
+  font-size: 1.2em;
+}
+
+.see-wrapped-button {
+  margin: 0;
+  margin-top: 30px;
+  background-color: black;
+  border: none;
+  border-radius: 15px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  min-height: 60px;
+  text-align: center;
+  transition: transform 300ms ease-out, box-shadow 300ms ease-out;
+  width: 100%;
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.40);
+}
+
+.see-wrapped-button:hover {
+  box-shadow: none;
+  transform: translateY(3px);
 }
